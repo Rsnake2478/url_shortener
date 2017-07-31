@@ -1,0 +1,20 @@
+{
+    "name": "test/project",
+    "description": "Test silex application",
+    "version": "1.4.0",
+    "type": "project",
+    "require": {
+        "silex/silex": ">=2.0",
+        "monolog/monolog": ">=1.0.0",
+        "twig/twig": ">=1.8",
+        "symfony/form": "^3.3",
+        "symfony/validator": "^3.3",
+        "symfony/config": "^3.3",
+        "symfony/twig-bridge": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "RSnake\\" : "src/RSnake/"
+        }
+    }
+}
