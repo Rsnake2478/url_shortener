@@ -2,5 +2,5 @@
 
 /** @var $app \Silex\Application */
 
-$app->match('/', 'RSnake\\Controller\\IndexController::index');
+$app->match('/', 'RSnake\\Controller\\IndexController::indexAction');
 
