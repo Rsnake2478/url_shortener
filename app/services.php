@@ -27,3 +27,6 @@ $app->register(new \Silex\Provider\TranslationServiceProvider(), array(
     'translator.domains'    => array(),
     'locale'                => 'en'
 ));
+
+//Url shortener service
+$app->register(new \RSnake\Provider\UrlShortenerServiceProvider());
