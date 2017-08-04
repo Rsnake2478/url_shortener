@@ -1,3 +1,13 @@
-{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% extends "parent.twig" %}
 
-{{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{% block title %}Index{% endblock %}
+{% block content %}
+    <h1>Enter url to be shorted:</h1>
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+    {{ form_start(form,  {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_row(form.fullUrl, {'label': 'Full Url (required) '}) }}
+        {{ form_row(form.shortUrl, {'label': 'Short Url Token (optional) ' }) }}
+        {{ form_row(form.save, { 'attr': {'class': 'btn btn-primary btn-lg'} }) }}
+    {{ form_end(form) }}
+{% endblock %}

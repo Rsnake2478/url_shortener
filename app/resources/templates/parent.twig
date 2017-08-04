@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <title>{% block title %}{% endblock %} - Url Shortener</title>
+    {% endblock %}
+</head>
+<body>
+<div id="content" class="container">{% block content %}{% endblock %}</div>
+<div id="footer" class="panel-footer">
+    {% block footer %}
+        &copy; Copyright 2017 by RSnake2478</a>.
+    {% endblock %}
+</div>
+</body>
+</html>
