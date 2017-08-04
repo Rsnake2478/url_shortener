@@ -17,15 +17,18 @@ $app['monolog.logfile'] = '../app/logs/application.log';
 $app['storage.adapter'] = 'mysql'; // or redis
 $app['storage.config'] = array(
     'mysql' => array(
-        'host'      => '127.0.0.1',
-        'user'      => 'root',
-        'pass'      => 'scout',
-        'database'  => 'url_shortener'
+        'host'          => '127.0.0.1',
+        'user'          => 'root',
+        'pass'          => 'scout',
+        'database'      => 'url_shortener',
+        'test_database' => 'url_shortener_test'
     ),
     'redis' => array(
-        'host'      => '127.0.0.1',
-        'port'      => 6379,
-        'database'  => 0
+        'host'          => '127.0.0.1',
+        'port'          => 6379,
+        'database'      => 0,
+        'test_database' => 1
+
     )
 );
 

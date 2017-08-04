@@ -26,6 +26,7 @@ class RedisAdapter implements AdapterInterface {
         $result = $this->redis->connect(
             $config['redis']['host']
         );
+        $this->redis->select($config['redis']['database']);
         if(!$result) {
             throw new \RuntimeException('Redis connection error - ' . $this->redis->getLastError());
         }

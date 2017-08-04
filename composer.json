@@ -10,7 +10,8 @@
         "symfony/form": "^3.3",
         "symfony/validator": "^3.3",
         "symfony/config": "^3.3",
-        "symfony/twig-bridge": "^3.3"
+        "symfony/twig-bridge": "^3.3",
+        "phpunit/phpunit": "^5.7.21"
     },
     "autoload": {
         "psr-4": {
