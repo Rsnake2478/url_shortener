@@ -7,7 +7,8 @@ namespace RSnake\UrlShortener\Storage;
  *
  * @package RSnake\UrlShortener\Storage
  */
-class RedisAdapter implements AdapterInterface {
+class RedisAdapter implements AdapterInterface
+{
 
     /**
      * Redis instance
@@ -21,13 +22,14 @@ class RedisAdapter implements AdapterInterface {
      *
      * @param $config array
      */
-    public function __construct($config) {
+    public function __construct($config)
+    {
         $this->redis = new \Redis();
         $result = $this->redis->connect(
             $config['redis']['host']
         );
         $this->redis->select($config['redis']['database']);
-        if(!$result) {
+        if (!$result) {
             throw new \RuntimeException('Redis connection error - ' . $this->redis->getLastError());
         }
     }
@@ -35,7 +37,8 @@ class RedisAdapter implements AdapterInterface {
     /**
      * @inheritdoc
      */
-    public function addShortUrl ($fullUrl, $shortUrl, $ttl) {
+    public function addShortUrl($fullUrl, $shortUrl, $ttl)
+    {
         $this->redis->set($shortUrl, $fullUrl, $ttl);
         return $shortUrl;
     }
@@ -43,7 +46,8 @@ class RedisAdapter implements AdapterInterface {
     /**
      * @inheritdoc
      */
-    public function getFullUrl ($shortUrl) {
+    public function getFullUrl($shortUrl)
+    {
         $result = $this->redis->get($shortUrl);
         if (false === $result) {
             return null;

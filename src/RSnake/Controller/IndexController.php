@@ -77,12 +77,12 @@ class IndexController
      * @param $shortUrl
      * @return \HttpResponse
      */
-    public function showAction(Request $request, Application $app, $shortUrl) {
+    public function showAction(Request $request, Application $app, $shortUrl)
+    {
         return $app['twig']->render('show.twig', array(
             'url'       => $app['url.baseurl'] . '/' . $shortUrl,
             'baseUrl'   => $app['url.baseurl']
         ));
-
     }
 
     /**
@@ -93,7 +93,8 @@ class IndexController
      * @param $shortUrl
      * @return Response
      */
-    public function redirectAction(Request $request, Application $app, $shortUrl) {
+    public function redirectAction(Request $request, Application $app, $shortUrl)
+    {
         /** @var UrlShortenerService $urlShortenerService */
         $urlShortenerService = $app['url.shortener'];
 

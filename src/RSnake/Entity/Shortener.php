@@ -5,7 +5,8 @@ namespace RSnake\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class Shortener {
+class Shortener
+{
 
     /**
      * @var string
@@ -28,7 +29,9 @@ class Shortener {
         )));
         $metadata->addPropertyConstraint('shortUrl', new Assert\Regex(array(
             'pattern'   => '/[a-z0-9]{4,255}/',
-            'message'   => 'Short URL should consists of small case letters, numbers and should have length between 4 and 255 characters.'
+            'message'   =>
+                'Short URL should consists of small case letters, numbers' .
+                'and should have length between 4 and 255 characters.'
         )));
     }
 }

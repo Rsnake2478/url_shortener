@@ -9,7 +9,8 @@ namespace RSnake\UrlShortener\Storage;
  *
  * @package RSnake\UrlShortener\Storage
  */
-interface AdapterInterface {
+interface AdapterInterface
+{
 
     /**
      * Add short url to storage with specified ttl
@@ -19,7 +20,7 @@ interface AdapterInterface {
      * @param $ttl
      * @return bool
      */
-    public function addShortUrl ($fullUrl, $shortUrl, $ttl);
+    public function addShortUrl($fullUrl, $shortUrl, $ttl);
 
     /**
      * Retrieve full url by short url
@@ -27,7 +28,7 @@ interface AdapterInterface {
      * @param $shortUrl
      * @return string|null
      */
-    public function getFullUrl ($shortUrl);
+    public function getFullUrl($shortUrl);
 
     /**
      * Get counts of use urls

@@ -1,6 +1,7 @@
 <?php
 
 namespace RSnake\UrlShortener\Storage;
+
 use http\Exception\RuntimeException;
 
 /**
@@ -8,7 +9,8 @@ use http\Exception\RuntimeException;
  *
  * @package RSnake\UrlShortener\Storage
  */
-class MysqlAdapter implements AdapterInterface {
+class MysqlAdapter implements AdapterInterface
+{
 
     /**
      * Connection to mysql
@@ -22,7 +24,8 @@ class MysqlAdapter implements AdapterInterface {
      *
      * @param $config array
      */
-    public function __construct($config) {
+    public function __construct($config)
+    {
         $this->connection = new \mysqli(
             $config['mysql']['host'],
             $config['mysql']['user'],
@@ -34,9 +37,10 @@ class MysqlAdapter implements AdapterInterface {
     /**
      * @inheritdoc
      */
-    public function addShortUrl ($fullUrl, $shortUrl, $ttl) {
+    public function addShortUrl($fullUrl, $shortUrl, $ttl)
+    {
         $validBefore = time() + $ttl;
-        if($stmt = $this->connection->prepare("INSERT INTO url VALUES (?, ?, ?)")) {
+        if ($stmt = $this->connection->prepare("INSERT INTO url VALUES (?, ?, ?)")) {
             $stmt->bind_param('ssi', $shortUrl, $fullUrl, $validBefore);
             $stmt->execute();
             $stmt->close();
@@ -50,7 +54,8 @@ class MysqlAdapter implements AdapterInterface {
     /**
      * @inheritdoc
      */
-    public function getFullUrl ($shortUrl) {
+    public function getFullUrl($shortUrl)
+    {
         if ($stmt = $this->connection->prepare("SELECT longUrl, validBefore FROM url WHERE shortUrl = ? LIMIT 1")) {
             $stmt->bind_param('s', $shortUrl);
             $stmt->execute();
@@ -77,7 +82,8 @@ class MysqlAdapter implements AdapterInterface {
     /**
      * @inheritdoc
      */
-    public function getCount() {
+    public function getCount()
+    {
         if ($stmt = $this->connection->prepare("SELECT COUNT(*) FROM url WHERE validBefore > ?")) {
             $stmt->bind_param('i', time());
             $stmt->execute();
@@ -95,7 +101,8 @@ class MysqlAdapter implements AdapterInterface {
      *
      * @param $shortUrl
      */
-    protected function deleteShortUrl($shortUrl) {
+    protected function deleteShortUrl($shortUrl)
+    {
         if ($stmt = $this->connection->prepare("DELETE FROM url WHERE shortUrl = ?")) {
             $stmt->bind_param('s', $shortUrl);
             $stmt->execute();

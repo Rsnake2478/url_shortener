@@ -2,7 +2,6 @@
 
 namespace RSnake\UrlShortener;
 
-
 use RSnake\UrlShortener\Storage\AdapterInterface;
 
 /**
@@ -11,7 +10,8 @@ use RSnake\UrlShortener\Storage\AdapterInterface;
  *
  * @package RSnake\UrlShortener
  */
-class UrlShortenerService {
+class UrlShortenerService
+{
 
     const DEFAULT_URL_TTL = 1209600; // Two week in seconds
 
@@ -33,7 +33,8 @@ class UrlShortenerService {
      * @param AdapterInterface $storageAdapter
      * @param int $ttl
      */
-    public function __construct(AdapterInterface $storageAdapter, $ttl = null) {
+    public function __construct(AdapterInterface $storageAdapter, $ttl = null)
+    {
         $this->adapter = $storageAdapter;
         if (null !== $ttl && is_int($ttl)) {
             $this->ttl = $ttl;
@@ -46,9 +47,10 @@ class UrlShortenerService {
      * @param $fullUrl
      * @return bool
      */
-    public function validateUrl($fullUrl) {
+    public function validateUrl($fullUrl)
+    {
         $curl = curl_init($fullUrl);
-        curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $curlResult = curl_exec($curl);
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
@@ -65,7 +67,8 @@ class UrlShortenerService {
      * @param $shortUrl
      * @return null|string
      */
-    public function getFullUrl ($shortUrl) {
+    public function getFullUrl($shortUrl)
+    {
         return $this->adapter->getFullUrl($shortUrl);
     }
 
@@ -77,7 +80,8 @@ class UrlShortenerService {
      *
      * @return false|string
      */
-    public function addShortUrl ($fullUrl, $shortUrl = null) {
+    public function addShortUrl($fullUrl, $shortUrl = null)
+    {
         if (null === $shortUrl) {
             do {
                 $shortUrl = $this->generateShortUrl();
@@ -91,8 +95,9 @@ class UrlShortenerService {
      *
      * @return integer
      */
-    public function getUsedCount() {
-       return $this->adapter->getCount();
+    public function getUsedCount()
+    {
+        return $this->adapter->getCount();
     }
 
     /**
@@ -100,7 +105,8 @@ class UrlShortenerService {
      *
      * @return string
      */
-    protected function generateShortUrl() {
+    protected function generateShortUrl()
+    {
         //TODO: Optimize short url generation
         return uniqid();
     }

@@ -7,7 +7,8 @@ namespace RSnake\UrlShortener\Storage;
  *
  * @package RSnake\UrlShortener\Storage
  */
-class AdapterFactory {
+class AdapterFactory
+{
 
     const MYSQL_ADAPTER = 'mysql';
     const REDIS_ADAPTER = 'redis';
@@ -19,7 +20,8 @@ class AdapterFactory {
      * @param $config
      * @return AdapterInterface
      */
-    public static function getAdapter($name, $config) {
+    public static function getAdapter($name, $config)
+    {
         switch ($name) {
             case self::MYSQL_ADAPTER:
                 return new MysqlAdapter($config);
