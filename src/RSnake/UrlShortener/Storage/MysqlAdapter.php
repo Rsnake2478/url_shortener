@@ -23,6 +23,7 @@ class MysqlAdapter implements AdapterInterface
      * MysqlAdapter constructor.
      *
      * @param $config array
+     * @throws \Exception
      */
     public function __construct($config)
     {
@@ -32,6 +33,9 @@ class MysqlAdapter implements AdapterInterface
             $config['mysql']['pass'],
             $config['mysql']['database']
         );
+        if ($this->connection->connect_errno) {
+            throw new \Exception('Cannot connect to Mysql: ' . $this->connection->connect_error);
+        }
     }
 
     /**
@@ -42,10 +46,12 @@ class MysqlAdapter implements AdapterInterface
         $validBefore = time() + $ttl;
         if ($stmt = $this->connection->prepare("INSERT INTO url VALUES (?, ?, ?)")) {
             $stmt->bind_param('ssi', $shortUrl, $fullUrl, $validBefore);
-            $stmt->execute();
+            if (!$stmt->execute()) {
+                throw new \Exception('Mysql error: ' . $this->connection->error);
+            };
             $stmt->close();
         } else {
-            throw new \RuntimeException('Mysql error');
+            throw new \Exception('Mysql error: ' . $this->connection->error);
         }
 
         return $shortUrl;
@@ -58,7 +64,9 @@ class MysqlAdapter implements AdapterInterface
     {
         if ($stmt = $this->connection->prepare("SELECT longUrl, validBefore FROM url WHERE shortUrl = ? LIMIT 1")) {
             $stmt->bind_param('s', $shortUrl);
-            $stmt->execute();
+            if (!$stmt->execute()) {
+                throw new \Exception('Mysql error: ' . $this->connection->error);
+            }
             $longUrl = null;
             $validBefore = null;
             $stmt->bind_result($longUrl, $validBefore);
@@ -75,7 +83,7 @@ class MysqlAdapter implements AdapterInterface
 
             return $longUrl;
         } else {
-            throw new \RuntimeException('Mysql error');
+            throw new \Exception('Mysql error: ' . $this->connection->error);
         }
     }
 
@@ -86,13 +94,15 @@ class MysqlAdapter implements AdapterInterface
     {
         if ($stmt = $this->connection->prepare("SELECT COUNT(*) FROM url WHERE validBefore > ?")) {
             $stmt->bind_param('i', time());
-            $stmt->execute();
+            if (!$stmt->execute()) {
+                throw new \Exception('Mysql error: ' . $this->connection->error);
+            }
             $count = 0;
             $stmt->bind_result($count);
             $stmt->fetch();
             return $count;
         } else {
-            throw new \RuntimeException('Mysql error');
+            throw new \Exception('Mysql error: ' . $this->connection->error);
         }
     }
 
@@ -100,13 +110,18 @@ class MysqlAdapter implements AdapterInterface
      * removes url from database
      *
      * @param $shortUrl
+     * @throws \Exception
      */
     protected function deleteShortUrl($shortUrl)
     {
         if ($stmt = $this->connection->prepare("DELETE FROM url WHERE shortUrl = ?")) {
             $stmt->bind_param('s', $shortUrl);
-            $stmt->execute();
+            if (!$stmt->execute()) {
+                throw new \Exception('Mysql error: ' . $this->connection->error);
+            }
             $stmt->close();
+        } else {
+            throw new \Exception('Mysql error: ' . $this->connection->error);
         }
     }
 }

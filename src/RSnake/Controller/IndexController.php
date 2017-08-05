@@ -54,9 +54,8 @@ class IndexController
                 $isError = true;
             }
 
-            $shortUrl = $urlShortenerService->addShortUrl($data->fullUrl, $data->shortUrl);
-
             if (!$isError) {
+                $shortUrl = $urlShortenerService->addShortUrl($data->fullUrl, $data->shortUrl);
                 $logger = $app['logger'];
                 $logger->notice("New short url '{$shortUrl}' is created!");
                 return new RedirectResponse($app['url.baseurl'] . '/show/' . $shortUrl);
